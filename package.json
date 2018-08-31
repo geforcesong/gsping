@@ -20,5 +20,9 @@
   "homepage": "https://github.com/geforcesong/gsping#readme",
   "devDependencies": {
     "eslint": "^5.4.0"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "request": "^2.88.0"
   }
 }
