@@ -1,6 +1,7 @@
 const request = require('request');
 const CrawlerLogger = require('./CrawlerLogger');
-
+const colors = require('colors/safe');
+const RED = colors.green;
 class Crawler {
     constructor(url) {
         this.url = url;
@@ -16,6 +17,7 @@ class Crawler {
     }
 
     async _crawOnce() {
+        let self = this;
         return new Promise((resolve, reject) => {
             request({
                 uri: this.url,
@@ -27,6 +29,9 @@ class Crawler {
                 }
                 if (!resp.timings || !resp.timingPhases) {
                     return resolve(null);
+                }
+                if (resp.statusCode !== 200) {
+                    console.log(RED(`Error in url(${self.url}), status: ${resp.statusCode}`));
                 }
                 return resolve({
                     firstByte: resp.timingPhases.firstByte,
