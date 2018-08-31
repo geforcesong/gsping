@@ -6,13 +6,14 @@ const args = minimist(process.argv.slice(2));
 
 (async _ => {
     if (!args.u) {
-        console.log('you must specify a url to test');
+        console.log('you must specify a url to test by using -u <url>');
+        console.log('use -t <number> to indicate how many times');
         return;
     }
 
     const times = args.t;
     if(isNaN(times)){
-        console.log('you must valid number as times');
+        console.log('you must valid number as times.');
         return;
     }
     console.log(colors.cyan(1111) + colors.red(222));
