@@ -1,3 +1,5 @@
+const colors = require('colors/safe');
+const GREEN = colors.green;
 class Logger {
     constructor(fields) {
         this.fields = fields;
@@ -17,9 +19,8 @@ class Logger {
             self.sumData['sum_' + el] += data[el];
             strResult += `${el}: ${data[el].toFixed(2)}. `;
         });
-        console.log(strResult);
-        console.log(`avgFirstByte=${(this.sumData['sum_firstByte'] / count).toFixed(0)}, avgResponseTotal:${(this.sumData['sum_responseTotal'] / count).toFixed(0)}.`);
-        console.log('--------------------------');
+        console.log(`${count}. ${strResult}`);
+        console.log(colors.gray(`Avg FirstByte: ${GREEN((this.sumData['sum_firstByte'] / count).toFixed(0))}, Avg ResponseTotal: ${GREEN((this.sumData['sum_responseTotal'] / count).toFixed(0))}.`));
     }
 }
 
