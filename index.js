@@ -16,7 +16,6 @@ const args = minimist(process.argv.slice(2));
         console.log('you must valid number as times.');
         return;
     }
-    console.log(colors.cyan(1111) + colors.red(222));
 
     console.log();
     console.log(`We are going to crawl this url for ${times} times`);
