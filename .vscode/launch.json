@@ -10,7 +10,12 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/index.js",
             "args": [
-                "-t", "1", "-u", "https://www.google.com"
+                "-t",
+                "1",
+                "-u",
+                "https://www.google.com",
+                "--ua",
+                "googlebot"
             ]
         }
     ]

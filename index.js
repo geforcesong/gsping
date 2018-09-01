@@ -12,10 +12,13 @@ const args = minimist(process.argv.slice(2));
     }
 
     const times = args.t;
-    if(isNaN(times)){
+    if (isNaN(times)) {
         console.log('you must valid number as times.');
         return;
     }
+
+    const isMobile = !!(args.m);
+    const ua = args.ua;
 
     console.log();
     console.log(`We are going to crawl this url for ${times} times`);
@@ -24,7 +27,7 @@ const args = minimist(process.argv.slice(2));
     console.log();
     console.log();
 
-    let c = new Crawler(args.u);
+    let c = new Crawler({ url: args.u, isMobile, ua });
     c.crawl(times);
 
 })();
