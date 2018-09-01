@@ -1,6 +1,7 @@
 const request = require('request');
 const CrawlerLogger = require('./CrawlerLogger');
 const colors = require('colors/safe');
+const Common = require('../utility/common');
 const RED = colors.green;
 
 class Crawler {
@@ -9,10 +10,12 @@ class Crawler {
         this.isMobile = options.isMobile;
         this.userAgent = options.ua;
         this.times = options.times;
+        this.batchCount = options.batchCount;
+        this.interval = options.interval;
     }
 
     _showCrawlInfo() {
-        console.log(`Crawling Url: ${this.url}, total round ${this.times}.`);
+        console.log(`Crawling Url: ${this.url}, total round ${this.times}, batch count ${this.batchCount}, interval: ${this.interval}.`);
         console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
         console.log();
     }
@@ -20,9 +23,25 @@ class Crawler {
     async crawl() {
         this._showCrawlInfo();
         let crawlerLogger = new CrawlerLogger(['socket', 'dnsLookup', 'connect', 'firstByte', 'responseTotal']);
-        for (var i = 0; i < this.times; i++) {
-            let ret = await this._crawOnce();
-            crawlerLogger.add(ret);
+
+        let processedCount = 0;
+        while (processedCount < this.times) {
+            let batchPromises = [];
+            for (var i = processedCount; i < (processedCount + this.batchCount) && i < this.times; i++) {
+                batchPromises.push(this._crawOnce());
+            }
+            let ret = await Promise.all(batchPromises);
+            if (ret && ret.length) {
+                ret.forEach((r) => {
+                    if (r) {
+                        crawlerLogger.add(r);
+                    }
+                });
+            }
+            processedCount += this.batchCount;
+            if (processedCount <= this.times && this.interval) {
+                await Common.delay(this.interval);
+            }
         }
     }
 

@@ -23,6 +23,8 @@ function showHelp() {
     console.log('use -u <url> to specify a url to test');
     console.log('use -t <number> to indicate how many times');
     console.log('use -m to use mobile user agent');
+    console.log('use --batch to set batch crawling count');
+    console.log('use --interval to set crawling interval time in miliseconds');
     console.log('use --ua <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot');
 }
 
@@ -31,7 +33,9 @@ function parseInput(inputs) {
         isMobile: !!(inputs.m),
         url: inputs.u,
         times: inputs.t || 1,
-        ua: inputs.ua
+        ua: inputs.ua,
+        batchCount: inputs.batch || 1,
+        interval: inputs.interval || 0
     };
 
     if (!options.url) {
@@ -41,6 +45,20 @@ function parseInput(inputs) {
 
     if (options.times && isNaN(options.times)) {
         console.log('This is not a valid number for times -t');
+        return null;
+    }
+
+    if (options.batchCount && isNaN(options.batchCount)) {
+        console.log('This is not a valid number for batch count --batch');
+        return null;
+    }
+
+    if (!options.batchCount || options.batchCount < 1) {
+        options.batchCount = 1;
+    }
+
+    if ((options.interval && isNaN(options.interval)) || options.interval < 0) {
+        console.log('This is not a valid number for interval --interval');
         return null;
     }
 
