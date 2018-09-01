@@ -12,6 +12,11 @@
   "bin": {
     "gsping": "index.js"
   },
+  "keywords": [
+    "crawl",
+    "crawler",
+    "web performance"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
