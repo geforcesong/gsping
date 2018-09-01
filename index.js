@@ -8,6 +8,8 @@ const args = minimist(process.argv.slice(2));
     if (!args.u) {
         console.log('you must specify a url to test by using -u <url>');
         console.log('use -t <number> to indicate how many times');
+        console.log('use -m to use mobile user agent');
+        console.log('use --ua <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot');
         return;
     }
 
@@ -27,7 +29,10 @@ const args = minimist(process.argv.slice(2));
     console.log();
     console.log();
 
-    let c = new Crawler({ url: args.u, isMobile, ua });
-    c.crawl(times);
-
+    try {
+        let c = new Crawler({ url: args.u, isMobile, ua });
+        await c.crawl(times);
+    } catch (err){
+        console.log(err);
+    }
 })();
