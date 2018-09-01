@@ -19,6 +19,16 @@ npm install -g gsping
 gsping -u https://www.google.com -t 5
 ```
 
+> example crawl google for 10 times, batch count 3 and interval 3s
 
+```bash
+gsping -u https://www.google.com -t 10 --batch 3 --interval 3000
+```
+
+> example crawl google with google mobile(-m) bot user agent
+
+```bash
+gsping -u https://www.google.com -t 5 -m --ua googlebot
+```
 
 
