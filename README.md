@@ -1,7 +1,7 @@
 gsping
 ====================
 
-One small tool to crawl website and git a simple report in the console.
+One small tool to crawl website and get a simple report in the console.
 
 > Small crawling tool
 
