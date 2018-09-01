@@ -1,31 +1,26 @@
 const request = require('request');
 const CrawlerLogger = require('./CrawlerLogger');
 const colors = require('colors/safe');
-const userAgent = require('./ua.json');
-
 const RED = colors.green;
+
 class Crawler {
     constructor(options) {
         this.url = options.url;
         this.isMobile = options.isMobile;
-        options.ua = options.ua || 'chrome';
-        if (!this._isValidUA(options.ua)) {
-            throw new Error('ua parameter is invalid!');
-        }
-        this.userAgent = options.isMobile ? userAgent.mobile[options.ua] : userAgent.desktop[options.ua];
+        this.userAgent = options.ua;
+        this.times = options.times;
     }
 
-    _isValidUA(ua, isMobile) {
-        if (isMobile) {
-            return Object.keys(userAgent.mobile).includes(ua);
-        }
-        return Object.keys(userAgent.desktop).includes(ua);
+    _showCrawlInfo() {
+        console.log(`Crawling Url: ${this.url}, total round ${this.times}.`);
+        console.log(`User Agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}:${this.userAgent.userAgentString}`);
+        console.log();
     }
 
-    async crawl(options) {
-        let round = (!options.times || options.times < 1) ? 1 : options.times;
+    async crawl() {
+        this._showCrawlInfo();
         let crawlerLogger = new CrawlerLogger(['socket', 'dnsLookup', 'connect', 'firstByte', 'responseTotal']);
-        for (var i = 0; i < round; i++) {
+        for (var i = 0; i < this.times; i++) {
             let ret = await this._crawOnce();
             crawlerLogger.add(ret);
         }
@@ -35,6 +30,9 @@ class Crawler {
         let self = this;
         return new Promise((resolve, reject) => {
             request({
+                headers: {
+                    'user-agent': self.userAgent
+                },
                 uri: this.url,
                 method: 'GET',
                 time: true
