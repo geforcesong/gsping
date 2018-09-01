@@ -14,8 +14,8 @@
                 "1",
                 "-u",
                 "https://www.google.com",
-                "--ua",
-                "googlebot"
+                "--existkey",
+                "itemtype=\"http://schema.org/WebPage\""
             ]
         }
     ]

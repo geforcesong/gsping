@@ -31,4 +31,10 @@ gsping -u https://www.google.com -t 10 --batch 3 --interval 3000
 gsping -u https://www.google.com -t 5 -m --ua googlebot
 ```
 
+> example checking some string existing in response
+
+```zsh
+gsping -u https://www.google.com -t 10 --existkey itemtype=\"http://schema.org/WebPage\"
+```
+
 

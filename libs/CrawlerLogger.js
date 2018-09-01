@@ -1,5 +1,6 @@
 const colors = require('colors/safe');
 const GREEN = colors.green;
+const RED = colors.red;
 class Logger {
     constructor(fields) {
         this.fields = fields;
@@ -11,16 +12,24 @@ class Logger {
     }
 
     add(data) {
+        if (!data) {
+            return;
+        }
         let self = this;
         this.dataList.push(data);
         let count = this.dataList.length;
         let strResult = '';
+        let timingObj = data.timing;
         this.fields.forEach((el) => {
-            self.sumData['sum_' + el] += data[el];
-            strResult += `${el}: ${data[el].toFixed(2)}. `;
+            self.sumData['sum_' + el] += timingObj[el];
+            strResult += `${el}: ${timingObj[el].toFixed(2)}. `;
         });
         console.log(`${count}. ${strResult}`);
-        console.log(colors.gray(`Avg FirstByte: ${GREEN((this.sumData['sum_firstByte'] / count).toFixed(0))}, Avg ResponseTotal: ${GREEN((this.sumData['sum_responseTotal'] / count).toFixed(0))}.`));
+        let summary = `Avg FirstByte: ${GREEN((this.sumData['sum_firstByte'] / count).toFixed(0))}, Avg ResponseTotal: ${GREEN((this.sumData['sum_responseTotal'] / count).toFixed(0))}.`;
+        if (data.existkeyCheckResult) {
+            summary += ` keycheck: ${data.existkeyCheckResult.includes('NOT') ? RED(data.existkeyCheckResult) : GREEN(data.existkeyCheckResult)}, key is ${data.existkey}.`;
+        }
+        console.log(colors.gray(summary));
     }
 }
 

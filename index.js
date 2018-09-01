@@ -24,6 +24,7 @@ function showHelp() {
     console.log('use -t <number> to indicate how many times');
     console.log('use -m to use mobile user agent');
     console.log('use --batch to set batch crawling count');
+    console.log('use --existkey this is keyword to check if it exists in response.');
     console.log('use --interval to set crawling interval time in miliseconds');
     console.log('use --ua <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot');
 }
@@ -35,7 +36,8 @@ function parseInput(inputs) {
         times: inputs.t || 1,
         ua: inputs.ua,
         batchCount: inputs.batch || 1,
-        interval: inputs.interval || 0
+        interval: inputs.interval || 0,
+        existkey: inputs.existkey
     };
 
     if (!options.url) {

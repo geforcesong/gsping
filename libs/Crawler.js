@@ -12,6 +12,7 @@ class Crawler {
         this.times = options.times;
         this.batchCount = options.batchCount;
         this.interval = options.interval;
+        this.existkey = options.existkey;
     }
 
     _showCrawlInfo() {
@@ -65,13 +66,20 @@ class Crawler {
                 if (resp.statusCode !== 200) {
                     console.log(RED(`Error in url(${self.url}), status: ${resp.statusCode}`));
                 }
-                return resolve({
-                    firstByte: resp.timingPhases.firstByte,
-                    responseTotal: resp.timings.end,
-                    dnsLookup: resp.timings.lookup,
-                    connect: resp.timings.connect,
-                    socket: resp.timings.socket
-                });
+                let result = {
+                    timing: {
+                        firstByte: resp.timingPhases.firstByte,
+                        responseTotal: resp.timings.end,
+                        dnsLookup: resp.timings.lookup,
+                        connect: resp.timings.connect,
+                        socket: resp.timings.socket
+                    }
+                };
+                if (resp.body && self.existkey) {
+                    result.existkey = self.existkey;
+                    result.existkeyCheckResult = resp.body.includes(self.existkey) ? 'FOUND' : 'NOT FOUND';
+                }
+                return resolve(result);
             });
         });
     }
