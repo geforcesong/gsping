@@ -13,7 +13,7 @@ class Crawler {
 
     _showCrawlInfo() {
         console.log(`Crawling Url: ${this.url}, total round ${this.times}.`);
-        console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}:${this.userAgent.userAgentString}`);
+        console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
         console.log();
     }
 
