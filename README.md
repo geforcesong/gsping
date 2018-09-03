@@ -13,7 +13,7 @@ npm install -g gsping
 
 ## Parameters ##
 
-* -v show current running version.
+* **-v** show current running version.
 * -u <url> to specify a url to test
 * -t <number> to indicate how many times
 * -m to use mobile user agent
