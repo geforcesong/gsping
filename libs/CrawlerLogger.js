@@ -45,7 +45,7 @@ class Logger {
         strResult += ` Socket: ${timingObj.socket.toFixed(2)}`.padEnd(20);
         strResult += ` DnsLookup: ${timingObj.dnsLookup.toFixed(2)}`.padEnd(20);
         strResult += ` Connect: ${timingObj.connect.toFixed(2)}`.padEnd(20);
-        strResult += ` FirstByte: ${timingObj.firstByte.toFixed(2)}`.padEnd(20);
+        strResult += ` FirstByte: ${timingObj.firstByte.toFixed(2)}`.padEnd(23);
         strResult += ` ResponseTotal: ${timingObj.responseTotal.toFixed(2)}`.padEnd(25);
 
         if (data.existkeyCheckResult) {
