@@ -2,6 +2,7 @@ const colors = require('colors/safe');
 const green = colors.green;
 const red = colors.red;
 const gray = colors.gray;
+const ccolor = require('../utility/ccoler');
 const validateInput = Symbol('VALIDATEINPUT');
 
 class Logger {
@@ -10,8 +11,8 @@ class Logger {
         this.crawledCount = 0;
     }
 
-    [validateInput](data){
-        if(!data || !data.timing || Object.keys(data.timing).length !== 5){
+    [validateInput](data) {
+        if (!data || !data.timing || Object.keys(data.timing).length !== 5) {
             return false;
         }
         return true;
@@ -55,16 +56,16 @@ class Logger {
     }
 
     showAvg() {
-        if(!this.sumData.size){
+        if (!this.sumData.size) {
             console.log(red('There is no data to show!!!'));
             return;
         }
-        let summary = 'AVG - ';
-        summary += ` Socket: ${green((this.sumData.get('socket') / this.crawledCount).toFixed(0))}`;
-        summary += ` DnsLookup: ${green((this.sumData.get('dnsLookup') / this.crawledCount).toFixed(0))}`;
-        summary += ` Connect: ${green((this.sumData.get('connect') / this.crawledCount).toFixed(0))}`;
-        summary += ` FirstByte: ${green((this.sumData.get('firstByte') / this.crawledCount).toFixed(0))}`;
-        summary += ` ResponseTotal: ${green((this.sumData.get('responseTotal') / this.crawledCount).toFixed(0))}`;
+        let summary = colors.yellow('avg -');
+        summary += ` Socket: ${ccolor.green((this.sumData.get('socket') / this.crawledCount).toFixed(0), { padEnd: 11 })}`;
+        summary += ` DnsLookup: ${ccolor.green((this.sumData.get('dnsLookup') / this.crawledCount).toFixed(0), { padEnd: 8 })}`;
+        summary += ` Connect: ${ccolor.green((this.sumData.get('connect') / this.crawledCount).toFixed(0), { padEnd: 10 })}`;
+        summary += ` FirstByte: ${ccolor.green((this.sumData.get('firstByte') / this.crawledCount).toFixed(0), { padEnd: 11 })}`;
+        summary += ` ResponseTotal: ${ccolor.green((this.sumData.get('responseTotal') / this.crawledCount).toFixed(0), { padEnd: 10 })}`;
         console.log(gray(summary));
     }
 }
