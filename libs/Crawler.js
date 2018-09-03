@@ -23,7 +23,7 @@ class Crawler {
 
     async crawl() {
         this._showCrawlInfo();
-        let crawlerLogger = new CrawlerLogger(['socket', 'dnsLookup', 'connect', 'firstByte', 'responseTotal']);
+        let crawlerLogger = new CrawlerLogger();
 
         let processedCount = 0;
         while (processedCount < this.times) {
@@ -40,6 +40,7 @@ class Crawler {
                 });
             }
             processedCount += this.batchCount;
+            crawlerLogger.showAvg();
             if (processedCount <= this.times && this.interval) {
                 await Common.delay(this.interval);
             }
