@@ -2,9 +2,15 @@
 const minimist = require('minimist');
 const Crawler = require('./libs/Crawler');
 const uaJson = require('./configs/ua.json');
+const pkg = require('./package.json');
 
 (async _ => {
     const args = minimist(process.argv.slice(2));
+    if(args.v){
+        console.log(`gsping is running in version ${pkg.version}`);
+        return;
+    }
+
     const options = parseInput(args);
 
     if (!options) {
@@ -20,6 +26,7 @@ const uaJson = require('./configs/ua.json');
 })();
 
 function showHelp() {
+    console.log('use -v show current running version.');
     console.log('use -u <url> to specify a url to test');
     console.log('use -t <number> to indicate how many times');
     console.log('use -m to use mobile user agent');
