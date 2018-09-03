@@ -41,7 +41,7 @@ class Crawler {
             }
             processedCount += this.batchCount;
             crawlerLogger.showAvg();
-            if (processedCount <= this.times && this.interval) {
+            if (processedCount < this.times && this.interval) {
                 await Common.delay(this.interval);
             }
         }
