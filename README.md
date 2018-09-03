@@ -47,5 +47,3 @@ gsping -u https://www.google.com -t 5 -m --ua googlebot
 ```zsh
 gsping -u https://www.google.com -t 10 --existkey itemtype=\"http://schema.org/WebPage\"
 ```
-
-
