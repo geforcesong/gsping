@@ -14,14 +14,13 @@ npm install -g gsping
 ## Parameters ##
 
 * **-v** show current running version.
-* -u <url> to specify a url to test
-* -t <number> to indicate how many times
-* -m to use mobile user agent
-* --batch to set batch crawling count
-* --existkey this is keyword to check if it exists in response.
-* --interval to set crawling interval time in miliseconds
-* --ua <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot
-
+* **-u** <url> to specify a url to test
+* **-t** <number> to indicate how many times
+* **-m** to use mobile user agent
+* **--batch** to set batch crawling count
+* **--existkey** this is keyword to check if it exists in response.
+* **--interval** to set crawling interval time in miliseconds
+* **--ua** <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot
 
 ## Usage ##
 
