@@ -42,16 +42,16 @@ class Logger {
         let strResult = '';
         const timingObj = data.timing;
 
-        strResult += `Socket:${timingObj.socket.toFixed(2)} `;
-        strResult += `DnsLookup:${timingObj.dnsLookup.toFixed(2)} `;
-        strResult += `Connect:${timingObj.connect.toFixed(2)} `;
-        strResult += `FirstByte:${timingObj.firstByte.toFixed(2)} `;
-        strResult += `ResponseTotal:${timingObj.responseTotal.toFixed(2)} `;
+        strResult += ` Socket: ${timingObj.socket.toFixed(2)}`.padEnd(20);
+        strResult += ` DnsLookup: ${timingObj.dnsLookup.toFixed(2)}`.padEnd(20);
+        strResult += ` Connect: ${timingObj.connect.toFixed(2)}`.padEnd(20);
+        strResult += ` FirstByte: ${timingObj.firstByte.toFixed(2)}`.padEnd(20);
+        strResult += ` ResponseTotal: ${timingObj.responseTotal.toFixed(2)}`.padEnd(25);
 
         if (data.existkeyCheckResult) {
             strResult += ` keycheck: ${data.existkeyCheckResult.includes('NOT') ? red(data.existkeyCheckResult) : green(data.existkeyCheckResult)}, key is ${data.existkey}.`;
         }
-        console.log(`${this.crawledCount}. ${strResult}`);
+        console.log(`${this.crawledCount}.`.padEnd(4) + ` ${strResult}`);
     }
 
     showAvg() {
