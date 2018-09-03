@@ -1,21 +1,30 @@
 const colors = require('colors/safe');
-const GREEN = colors.green;
-const RED = colors.red;
+const green = colors.green;
+const red = colors.red;
+const gray = colors.gray;
+const validateInput = Symbol('VALIDATEINPUT');
+
 class Logger {
     constructor() {
         this.sumData = new Map();
         this.crawledCount = 0;
     }
 
+    [validateInput](data){
+        if(!data || !data.timing || Object.keys(data.timing).length !== 5){
+            return false;
+        }
+        return true;
+    }
+
     add(data) {
-        if (!data || !data.timing) {
+        if (!data || !this[validateInput](data)) {
             return;
         }
         this.crawledCount++;
 
-        let self = this;
-        let strResult = '';
-        let timingObj = data.timing;
+        const self = this;
+        const timingObj = data.timing;
         Object.keys(timingObj).forEach((field) => {
             const timeValue = timingObj[field];
             if (self.sumData.has(field)) {
@@ -26,6 +35,13 @@ class Logger {
             }
         });
 
+        this.showRecord(data);
+    }
+
+    showRecord(data) {
+        let strResult = '';
+        const timingObj = data.timing;
+
         strResult += `Socket:${timingObj.socket.toFixed(2)} `;
         strResult += `DnsLookup:${timingObj.dnsLookup.toFixed(2)} `;
         strResult += `Connect:${timingObj.connect.toFixed(2)} `;
@@ -33,19 +49,23 @@ class Logger {
         strResult += `ResponseTotal:${timingObj.responseTotal.toFixed(2)} `;
 
         if (data.existkeyCheckResult) {
-            strResult += ` keycheck: ${data.existkeyCheckResult.includes('NOT') ? RED(data.existkeyCheckResult) : GREEN(data.existkeyCheckResult)}, key is ${data.existkey}.`;
+            strResult += ` keycheck: ${data.existkeyCheckResult.includes('NOT') ? red(data.existkeyCheckResult) : green(data.existkeyCheckResult)}, key is ${data.existkey}.`;
         }
         console.log(`${this.crawledCount}. ${strResult}`);
     }
 
-    showAvg(){
+    showAvg() {
+        if(!this.sumData.size){
+            console.log(red('There is no data to show!!!'));
+            return;
+        }
         let summary = 'AVG - ';
-        summary += ` Socket: ${GREEN((this.sumData.get('socket') / this.crawledCount).toFixed(0))}`;
-        summary += ` DnsLookup: ${GREEN((this.sumData.get('dnsLookup') / this.crawledCount).toFixed(0))}`;
-        summary += ` Connect: ${GREEN((this.sumData.get('connect') / this.crawledCount).toFixed(0))}`;
-        summary += ` FirstByte: ${GREEN((this.sumData.get('firstByte') / this.crawledCount).toFixed(0))}`;
-        summary += ` ResponseTotal: ${GREEN((this.sumData.get('responseTotal') / this.crawledCount).toFixed(0))}`;
-        console.log(colors.gray(summary));
+        summary += ` Socket: ${green((this.sumData.get('socket') / this.crawledCount).toFixed(0))}`;
+        summary += ` DnsLookup: ${green((this.sumData.get('dnsLookup') / this.crawledCount).toFixed(0))}`;
+        summary += ` Connect: ${green((this.sumData.get('connect') / this.crawledCount).toFixed(0))}`;
+        summary += ` FirstByte: ${green((this.sumData.get('firstByte') / this.crawledCount).toFixed(0))}`;
+        summary += ` ResponseTotal: ${green((this.sumData.get('responseTotal') / this.crawledCount).toFixed(0))}`;
+        console.log(gray(summary));
     }
 }
 
