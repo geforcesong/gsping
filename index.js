@@ -40,24 +40,3 @@ function showHelp() {
     console.log('use --interval to set crawling interval time in miliseconds');
     console.log('use --ua <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot');
 }
-
-function parseInput(inputs) {
-    let options = {
-        isMobile: !!(inputs.m),
-        url: inputs.u,
-        times: inputs.t || 1,
-        ua: inputs.ua,
-        batch: inputs.batch || defaultBatch,
-        interval: inputs.interval || 0,
-        existkey: inputs.existkey
-    };
-
-
-
-
-
-
-
-
-    return options;
-}

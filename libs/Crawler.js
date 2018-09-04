@@ -1,8 +1,7 @@
 const request = require('request');
 const CrawlerLogger = require('./CrawlerLogger');
-const colors = require('colors/safe');
+const ccolors = require('../utility/ccolors');
 const Common = require('../utility/common');
-const RED = colors.green;
 
 class Crawler {
     constructor(options) {
@@ -16,7 +15,14 @@ class Crawler {
     }
 
     _showCrawlInfo() {
-        console.log(`Crawling Url: ${this.url}, total round ${this.times}, batch count ${this.batchCount}, interval: ${this.interval}.`);
+        let info = `Crawling Url: ${this.url}, total round ${this.times}. `;
+        if (this.batchCount !== 10000000) {
+            info += `batch: ${this.batchCount}. `;
+        }
+        if (this.interval) {
+            info += `interval: ${this.interval}. `;
+        }
+        console.log(info);
         console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
         console.log();
     }
@@ -65,7 +71,7 @@ class Crawler {
                     return resolve(null);
                 }
                 if (resp.statusCode !== 200) {
-                    console.log(RED(`Error in url(${self.url}), status: ${resp.statusCode}`));
+                    console.log(ccolors.red(`Error in url(${self.url}), status: ${resp.statusCode}`));
                 }
                 let result = {
                     timing: {

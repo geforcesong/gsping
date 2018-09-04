@@ -1,4 +1,4 @@
-const ccolor = require('./utility/ccoler');
+const ccolors = require('./utility/ccolors');
 const uaJson = require('./configs/ua.json');
 const constants = require('./utility/constants');
 class InputMan {
@@ -37,7 +37,7 @@ class InputMan {
             const config = require(file);
             return config;
         } catch (err) {
-            console.log(ccolor.red(err));
+            console.log(ccolors.red(err));
             return null;
         }
     }
@@ -57,9 +57,13 @@ class InputMan {
             options.batch = constants.BATCH;
         }
         options.times = options.times || 1;
-        if(options.regexp){
+        if (options.regexp) {
             options.existkey = new RegExp(options.existkey);
         }
+        if (!options.method) {
+            options.method = 'GET';
+        }
+
     }
 
     _validateOptions(options) {
@@ -81,6 +85,13 @@ class InputMan {
 
         if ((options.interval && isNaN(options.interval)) || options.interval < 0 || options.interval === true) {
             throw new Error('This is not a valid number for interval');
+        }
+
+        if (options.method) {
+            options.method = options.method.toUpperCase();
+            if (!['GET', 'POST', 'PUT', 'DELETE'].includes(options.method)) {
+                throw new Error('This is not a valid http method');
+            }
         }
     }
 

@@ -2,7 +2,7 @@ const colors = require('colors/safe');
 const green = colors.green;
 const red = colors.red;
 const gray = colors.gray;
-const ccolor = require('../utility/ccoler');
+const ccolor = require('../utility/ccolors');
 const validateInput = Symbol('VALIDATEINPUT');
 
 class Logger {

@@ -1,5 +1,7 @@
 {
     "isMobile": false,
     "url": "https://sanmateotest.movoto.com:3026/san-francisco-ca/@37.7749295,-122.41941550000001/?vue=1",
-    "times": 5
+    "times": 5,
+    "method": "GET",
+    "ua": "googlebot"
 }
