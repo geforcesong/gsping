@@ -1,11 +1,10 @@
 // Console color
 const colors = require('colors/safe');
-const green = colors.green;
-const red = colors.red;
-// const gray = colors.gray;
+const basecolor = Symbol('basecolor');
 
 class CColor {
-    static green(input, options) {
+
+    static [basecolor](color, input, options) {
         if (!input) {
             return '';
         }
@@ -21,26 +20,15 @@ class CColor {
                 ipt = ipt.padStart(options.padStart);
             }
         }
-        return green(ipt);
+        return colors[color](ipt);
+    }
+
+    static green(input, options) {
+        return CColor[basecolor]('green', input, options);
     }
 
     static red(input, options) {
-        if (!input) {
-            return '';
-        }
-        let ipt = input;
-        if (typeof (ipt) !== 'string') {
-            ipt = ipt.toString();
-        }
-        if (options) {
-            if (options.padEnd) {
-                ipt = ipt.padEnd(options.padEnd);
-            }
-            if (options.padStart) {
-                ipt = ipt.padStart(options.padStart);
-            }
-        }
-        return red(ipt);
+        return CColor[basecolor]('red', input, options);
     }
 }
 
