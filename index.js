@@ -47,7 +47,7 @@ function parseInput(inputs) {
         url: inputs.u,
         times: inputs.t || 1,
         ua: inputs.ua,
-        batch: inputs.batch || 1,
+        batch: inputs.batch || 10000000,
         interval: inputs.interval || 0,
         existkey: inputs.existkey
     };
