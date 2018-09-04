@@ -22,6 +22,26 @@ npm install -g gsping
 * **--interval** to set crawling interval time in miliseconds
 * **--ua** <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot
 
+## Using config ##
+
+```bash
+gsping --config ./gsping.config.json
+```
+
+> example for json format.
+
+```json
+{
+    "isMobile": false,
+    "url": "https://www.google.com",
+    "times": 1,
+    "method": "GET",
+    "ua": "googlebot",
+    "existkey": "content=\"noodp\"",
+    "regexp": true
+}
+```
+
 ## Usage ##
 
 > example crawl google for 5 times.
