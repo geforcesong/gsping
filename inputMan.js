@@ -1,0 +1,102 @@
+const ccolor = require('./utility/ccoler');
+const uaJson = require('./configs/ua.json');
+const constants = require('./utility/constants');
+class InputMan {
+    constructor(args) {
+        this.args = args;
+    }
+
+    parseOptions() {
+        let options = null;
+        if (this.args.config) {
+            options = this._parseFromFile(this.args.config);
+        } else {
+            options = this._parseFromInput(this.args);
+        }
+        this._processDefaultOptions(options);
+        this._validateOptions(options);
+        return options;
+    }
+
+    _parseFromInput(args) {
+        let options = {
+            isMobile: !!(args.m),
+            url: args.u,
+            times: args.t,
+            ua: args.ua,
+            batch: args.batch,
+            interval: args.interval,
+            existkey: args.existkey,
+            regexp: args.regexp
+        };
+        return options;
+    }
+
+    _parseFromFile(file) {
+        try {
+            const config = require(file);
+            return config;
+        } catch (err) {
+            console.log(ccolor.red(err));
+            return null;
+        }
+    }
+
+    _processDefaultOptions(options) {
+        if (!options) {
+            return;
+        }
+        options.isMobile = !!(options.isMobile);
+        if (options.ua === true) {
+            options.ua = '';
+        } else if (!options.ua) {
+            options.ua = constants.UA;
+        }
+        options.ua = this._parseUserAgent(options.ua, options.isMobile);
+        if (!options.batch || options.batch < 1) {
+            options.batch = constants.BATCH;
+        }
+        options.times = options.times || 1;
+        if(options.regexp){
+            options.existkey = new RegExp(options.existkey);
+        }
+    }
+
+    _validateOptions(options) {
+        if (!options) {
+            throw new Error('Configuration is not existed.');
+        }
+
+        if (!options.url) {
+            throw new Error('You must specify a url.');
+        }
+
+        if (options.times && isNaN(options.times)) {
+            throw new Error('This is not a valid number for times');
+        }
+
+        if (options.batch && isNaN(options.batch)) {
+            throw new Error('This is not a valid number for batch');
+        }
+
+        if ((options.interval && isNaN(options.interval)) || options.interval < 0 || options.interval === true) {
+            throw new Error('This is not a valid number for interval');
+        }
+    }
+
+    _parseUserAgent(ua, isMobile) {
+        let uaSetting = isMobile ? uaJson.mobile : uaJson.desktop;
+        if (Object.keys(uaSetting).includes(ua)) {
+            return {
+                name: ua,
+                userAgentString: uaSetting[ua]
+            };
+        }
+        return {
+            name: 'custom',
+            userAgentString: ua
+        };
+    }
+}
+
+module.exports = InputMan;
