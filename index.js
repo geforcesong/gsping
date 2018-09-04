@@ -1,27 +1,27 @@
 #! /usr/bin/env node
 const minimist = require('minimist');
 const Crawler = require('./libs/Crawler');
-const uaJson = require('./configs/ua.json');
 const pkg = require('./package.json');
+const InputMan = require('./inputMan');
 
 (async _ => {
     const args = minimist(process.argv.slice(2));
-    if(args.v){
+    if (args.v) {
         console.log(`gsping is running in version ${pkg.version}`);
         return;
     }
 
     let options = null;
-    if(args.config){
-        options = parseInputFromFile(args.config);
-    } else{
-        options = parseInput(args);
-    }
-
-    if (!options) {
+    try {
+        const inputMan = new InputMan(args);
+        options = inputMan.parseOptions();
+        if (!options) {
+            return showHelp();
+        }
+    } catch (err) {
+        console.log(err);
         return showHelp();
     }
-
     try {
         let c = new Crawler(options);
         await c.crawl();
@@ -47,76 +47,17 @@ function parseInput(inputs) {
         url: inputs.u,
         times: inputs.t || 1,
         ua: inputs.ua,
-        batch: inputs.batch || 10000000,
+        batch: inputs.batch || defaultBatch,
         interval: inputs.interval || 0,
         existkey: inputs.existkey
     };
 
-    if (!options.url) {
-        console.log('You must specify a url.');
-        return null;
-    }
 
-    if (options.times && isNaN(options.times)) {
-        console.log('This is not a valid number for times -t');
-        return null;
-    }
 
-    if (options.batch && isNaN(options.batch)) {
-        console.log('This is not a valid number for batch count --batch');
-        return null;
-    }
 
-    if (!options.batch || options.batch < 1) {
-        options.batch = 1;
-    }
 
-    if ((options.interval && isNaN(options.interval)) || options.interval < 0) {
-        console.log('This is not a valid number for interval --interval');
-        return null;
-    }
 
-    if (options.ua === true) {
-        options.ua = '';
-    } else if (!options.ua) {
-        options.ua = 'chrome';
-    }
-    options.ua = parseUserAgent(options.ua, options.isMobile);
+
+
     return options;
-}
-
-function parseUserAgent(ua, isMobile) {
-    let uaSetting = isMobile ? uaJson.mobile : uaJson.desktop;
-    if (Object.keys(uaSetting).includes(ua)) {
-        return {
-            name: ua,
-            userAgentString: uaSetting[ua]
-        };
-    }
-    return {
-        name: 'custom',
-        userAgentString: ua
-    };
-}
-
-function parseInputFromFile(file){
-    try{
-        const config = require(file);
-        if(!config.ua){
-            config.ua = 'chrome';
-        }
-        config.isMobile = !!(config.isMobile);
-        config.ua = parseUserAgent(config.ua, config.isMobile);
-        validateConfig(config);
-        return config;
-    } catch(err){
-        console.log(err);
-        return null;
-    }
-}
-
-function validateConfig(config){
-    if(!config){
-        throw new Error('Configuration is not existed.');
-    }
 }

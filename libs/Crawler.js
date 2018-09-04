@@ -78,7 +78,8 @@ class Crawler {
                 };
                 if (resp.body && self.existkey) {
                     result.existkey = self.existkey;
-                    result.existkeyCheckResult = resp.body.includes(self.existkey) ? 'FOUND' : 'NOT FOUND';
+                    let existFlag = (typeof self.existkey === 'string' ? resp.body.includes(self.existkey) : self.existkey.test(resp.body));
+                    result.existkeyCheckResult = existFlag ? 'FOUND' : 'NOT FOUND';
                 }
                 return resolve(result);
             });
