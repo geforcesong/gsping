@@ -52,7 +52,7 @@ class Crawler {
         return new Promise((resolve, reject) => {
             request({
                 headers: {
-                    'user-agent': self.userAgent
+                    'User-Agent': self.userAgent && self.userAgent.userAgentString
                 },
                 uri: this.url,
                 method: 'GET',
