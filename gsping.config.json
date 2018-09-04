@@ -1,0 +1,7 @@
+{
+    "isMobile": false,
+    "url": "https://www.google.com",
+    "times": 5,
+    "batch": 2,
+    "interval": 3000
+}

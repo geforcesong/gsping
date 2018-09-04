@@ -10,7 +10,7 @@ class Crawler {
         this.isMobile = options.isMobile;
         this.userAgent = options.ua;
         this.times = options.times;
-        this.batchCount = options.batchCount;
+        this.batchCount = options.batch;
         this.interval = options.interval;
         this.existkey = options.existkey;
     }

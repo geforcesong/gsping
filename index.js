@@ -11,7 +11,12 @@ const pkg = require('./package.json');
         return;
     }
 
-    const options = parseInput(args);
+    let options = null;
+    if(args.config){
+        options = parseInputFromFile(args.config);
+    } else{
+        options = parseInput(args);
+    }
 
     if (!options) {
         return showHelp();
@@ -42,7 +47,7 @@ function parseInput(inputs) {
         url: inputs.u,
         times: inputs.t || 1,
         ua: inputs.ua,
-        batchCount: inputs.batch || 1,
+        batch: inputs.batch || 1,
         interval: inputs.interval || 0,
         existkey: inputs.existkey
     };
@@ -57,13 +62,13 @@ function parseInput(inputs) {
         return null;
     }
 
-    if (options.batchCount && isNaN(options.batchCount)) {
+    if (options.batch && isNaN(options.batch)) {
         console.log('This is not a valid number for batch count --batch');
         return null;
     }
 
-    if (!options.batchCount || options.batchCount < 1) {
-        options.batchCount = 1;
+    if (!options.batch || options.batch < 1) {
+        options.batch = 1;
     }
 
     if ((options.interval && isNaN(options.interval)) || options.interval < 0) {
@@ -77,7 +82,6 @@ function parseInput(inputs) {
         options.ua = 'chrome';
     }
     options.ua = parseUserAgent(options.ua, options.isMobile);
-
     return options;
 }
 
@@ -93,4 +97,26 @@ function parseUserAgent(ua, isMobile) {
         name: 'custom',
         userAgentString: ua
     };
+}
+
+function parseInputFromFile(file){
+    try{
+        const config = require(file);
+        if(!config.ua){
+            config.ua = 'chrome';
+        }
+        config.isMobile = !!(config.isMobile);
+        config.ua = parseUserAgent(config.ua, config.isMobile);
+        validateConfig(config);
+        return config;
+    } catch(err){
+        console.log(err);
+        return null;
+    }
+}
+
+function validateConfig(config){
+    if(!config){
+        throw new Error('Configuration is not existed.');
+    }
 }
