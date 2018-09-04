@@ -12,10 +12,12 @@ class Crawler {
         this.batchCount = options.batch;
         this.interval = options.interval;
         this.existkey = options.existkey;
+        this.method = options.method;
+        this.body = options.body;
     }
 
     _showCrawlInfo() {
-        let info = `Crawling Url: ${this.url}, total round ${this.times}. `;
+        let info = `Crawling Url ${this.method}: ${this.url}, total round ${this.times}. `;
         if (this.batchCount !== 10000000) {
             info += `batch: ${this.batchCount}. `;
         }
@@ -61,7 +63,8 @@ class Crawler {
                     'User-Agent': self.userAgent && self.userAgent.userAgentString
                 },
                 uri: this.url,
-                method: 'GET',
+                method: this.method || 'GET',
+                body: this.body || undefined,
                 time: true
             }, (err, resp) => {
                 if (err) {
