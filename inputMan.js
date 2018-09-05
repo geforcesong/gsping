@@ -1,6 +1,8 @@
 const ccolors = require('./utility/ccolors');
 const uaJson = require('./configs/ua.json');
 const constants = require('./utility/constants');
+const path = require('path');
+
 class InputMan {
     constructor(args) {
         this.args = args;
@@ -34,7 +36,9 @@ class InputMan {
 
     _parseFromFile(file) {
         try {
-            const config = require(file);
+            const filePath = path.resolve(process.cwd(), file);
+            console.log(ccolors.magenta(`Loading configuration from ${filePath}`));
+            const config = require(filePath);
             return config;
         } catch (err) {
             console.log(ccolors.red(err));
