@@ -14,7 +14,7 @@ class Crawler {
         this.interval = options.interval;
         this.existkey = options.existkey;
         this.method = options.method;
-        this.body = options.body; 
+        this.body = options.body;
         this._browserCrawler = options.browser && new BrowserCrawler(this.url);
     }
 
@@ -41,8 +41,8 @@ class Crawler {
             let browerIndicatorPromises = [];
             for (var i = processedCount; i < (processedCount + this.batchCount) && i < this.times; i++) {
                 batchPromises.push(this._crawOnce());
-                if(this._browserCrawler){
-                    browerIndicatorPromises.push(this._browserCrawler.crawOnce());
+                if (this._browserCrawler) {
+                    browerIndicatorPromises.push(this._browserCrawler.crawOnce({ userAgent: this.userAgent }));
                 }
             }
             let ret = await Promise.all(batchPromises);

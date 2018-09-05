@@ -5,12 +5,16 @@ class BrowserCrawler {
         this.url = url;
     }
 
-    async crawOnce() {
+    async crawOnce(options) {
+        const opt = options  || {};
         // const browser = await puppeteer.launch({
         //     args: ['--disable-setuid-sandbox', '--no-sandbox']
         // });
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
+        if(opt.userAgent && opt.userAgent.userAgentString){
+            await page.setUserAgent(opt.userAgent.userAgentString);
+        }
         await page.goto(this.url);
         const perf = JSON.parse(await page.evaluate(() => {
             return JSON.stringify(performance.timing);
