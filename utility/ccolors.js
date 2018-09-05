@@ -38,6 +38,14 @@ class CColor {
     static blue(input, options) {
         return CColor[basecolor]('blue', input, options);
     }
+
+    static cyan(input, options) {
+        return CColor[basecolor]('cyan', input, options);
+    }
+
+    static yellow(input, options) {
+        return CColor[basecolor]('yellow', input, options);
+    }
 }
 
 module.exports = CColor;

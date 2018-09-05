@@ -17,7 +17,7 @@ class Crawler {
     }
 
     _showCrawlInfo() {
-        let info = `Crawling Url ${this.method}: ${this.url}, total round ${this.times}. `;
+        let info = `Crawling Url ${ccolors.cyan(this.method)}: ${ccolors.yellow(this.url)}, total round ${this.times}. `;
         if (this.batchCount !== 10000000) {
             info += `batch: ${this.batchCount}. `;
         }
