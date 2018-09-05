@@ -48,13 +48,22 @@ class Crawler {
                 ret.forEach((r) => {
                     if (r) {
                         crawlerLogger.add(r);
+                        crawlerLogger.showRecord(r);
                     }
                 });
             }
-            let browserRet = await Promise.all(browerIndicatorPromises);
-            console.log(browserRet);
-            processedCount += this.batchCount;
             crawlerLogger.showAvg();
+
+            let browserRet = await Promise.all(browerIndicatorPromises);
+            if (browserRet && browserRet.length) {
+                browserRet.forEach((r) => {
+                    if (r) {
+                        crawlerLogger.add(r, true);
+                    }
+                });
+            }
+            crawlerLogger.showBrowserAvg();
+            processedCount += this.batchCount;
             if (processedCount < this.times && this.interval) {
                 await Common.delay(this.interval);
             }

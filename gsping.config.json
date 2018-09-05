@@ -1,7 +1,7 @@
 {
     "isMobile": false,
     "url": "https://www.google.com",
-    "times": 1,
+    "times":5,
     "method": "GET",
     "ua": "googlebot",
     "existkey": "content=\"noodp\"",

@@ -4,7 +4,9 @@ const validateInput = Symbol('VALIDATEINPUT');
 class Logger {
     constructor() {
         this.sumData = new Map();
+        this.sumBrowserData = new Map();
         this.crawledCount = 0;
+        this.browserCrawledCount = 0;
     }
 
     [validateInput](data) {
@@ -14,25 +16,35 @@ class Logger {
         return true;
     }
 
-    add(data) {
-        if (!data || !this[validateInput](data)) {
+    add(data, isBrowser = false) {
+        if (!data) {
             return;
         }
-        this.crawledCount++;
+        if (!isBrowser && !this[validateInput](data)) {
+            return;
+        }
+        let timingObj = null;
+        if (!isBrowser) {
+            timingObj = data.timing;
+            this.crawledCount++;
+        } else {
+            this.browserCrawledCount++;
+            timingObj = data;
+        }
+        this._addRecord(timingObj, isBrowser);
+    }
 
-        const self = this;
-        const timingObj = data.timing;
+    _addRecord(timingObj, isBrowser) {
+        let mapData = isBrowser ? this.sumBrowserData : this.sumData;
         Object.keys(timingObj).forEach((field) => {
             const timeValue = timingObj[field];
-            if (self.sumData.has(field)) {
-                let old = self.sumData.get(field);
-                self.sumData.set(field, old + timeValue);
+            if (mapData.has(field)) {
+                let old = mapData.get(field);
+                mapData.set(field, old + timeValue);
             } else {
-                self.sumData.set(field, timeValue);
+                mapData.set(field, timeValue);
             }
         });
-
-        this.showRecord(data);
     }
 
     showRecord(data) {
@@ -71,6 +83,19 @@ class Logger {
         summary += ` FirstByte: ${ccolor.green((this.sumData.get('firstByte') / this.crawledCount).toFixed(0), { padEnd: 11 })}`;
         summary += ` ResponseTotal: ${ccolor.green((this.sumData.get('responseTotal') / this.crawledCount).toFixed(0), { padEnd: 10 })}`;
         console.log(ccolor.gray(summary));
+    }
+
+    showBrowserAvg() {
+        if (!this.sumBrowserData.size) {
+            console.log(ccolor.red('There is no browser data to show!!!'));
+            return;
+        }
+        console.log('performance data from headless browser:');
+        let result = '';
+        for (let obj of this.sumBrowserData) {
+            result += `${obj[0]}: ${(obj[1] / this.browserCrawledCount).toFixed(0)} `;
+        }
+        console.log(result);
     }
 }
 
