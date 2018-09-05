@@ -14,8 +14,8 @@ class Crawler {
         this.interval = options.interval;
         this.existkey = options.existkey;
         this.method = options.method;
-        this.body = options.body;
-        this._browserCrawler = new BrowserCrawler(this.url);
+        this.body = options.body; 
+        this._browserCrawler = options.browser && new BrowserCrawler(this.url);
     }
 
     _showCrawlInfo() {
@@ -41,7 +41,9 @@ class Crawler {
             let browerIndicatorPromises = [];
             for (var i = processedCount; i < (processedCount + this.batchCount) && i < this.times; i++) {
                 batchPromises.push(this._crawOnce());
-                browerIndicatorPromises.push(this._browserCrawler.crawOnce());
+                if(this._browserCrawler){
+                    browerIndicatorPromises.push(this._browserCrawler.crawOnce());
+                }
             }
             let ret = await Promise.all(batchPromises);
             if (ret && ret.length) {
@@ -53,16 +55,17 @@ class Crawler {
                 });
             }
             crawlerLogger.showAvg();
-
-            let browserRet = await Promise.all(browerIndicatorPromises);
-            if (browserRet && browserRet.length) {
-                browserRet.forEach((r) => {
-                    if (r) {
-                        crawlerLogger.add(r, true);
-                    }
-                });
+            if (this._browserCrawler) {
+                let browserRet = await Promise.all(browerIndicatorPromises);
+                if (browserRet && browserRet.length) {
+                    browserRet.forEach((r) => {
+                        if (r) {
+                            crawlerLogger.add(r, true);
+                        }
+                    });
+                }
+                crawlerLogger.showBrowserAvg();
             }
-            crawlerLogger.showBrowserAvg();
             processedCount += this.batchCount;
             if (processedCount < this.times && this.interval) {
                 await Common.delay(this.interval);

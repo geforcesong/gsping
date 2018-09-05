@@ -90,12 +90,13 @@ class Logger {
             console.log(ccolor.red('There is no browser data to show!!!'));
             return;
         }
-        console.log('performance data from headless browser:');
-        let result = '';
+        console.log('Avg performance data from headless browser:');
+        let result = [];
         for (let obj of this.sumBrowserData) {
-            result += `${obj[0]}: ${(obj[1] / this.browserCrawledCount).toFixed(0)} `;
+            result.push({ key: obj[0], value: (obj[1] / this.browserCrawledCount).toFixed(0) });
         }
-        console.log(result);
+        result = result.sort((a, b) => { return a.value - b.value; });
+        console.table(result);
     }
 }
 

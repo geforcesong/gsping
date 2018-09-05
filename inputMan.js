@@ -29,7 +29,8 @@ class InputMan {
             batch: args.batch,
             interval: args.interval,
             existkey: args.existkey,
-            regexp: args.regexp
+            regexp: args.regexp,
+            browser: args.browser
         };
         return options;
     }

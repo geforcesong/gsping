@@ -1,7 +1,7 @@
 gsping
 ====================
 
-One small tool to crawl website and get a simple performance report in the console.
+One small tool to crawl website and get a simple performance report in the console. You can also check in headless chrome mode
 
 > Small crawling tool for checking web performance
 
@@ -21,6 +21,7 @@ npm install -g gsping
 * **--existkey** this is keyword to check if it exists in response.
 * **--interval** to set crawling interval time in miliseconds
 * **--ua** <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot
+* **--browser** use headless browser to check the performce. it is using performance.timing and give you a table average results.
 
 ## Using config ##
 
@@ -38,7 +39,8 @@ gsping --config ./gsping.config.json
     "method": "GET",
     "ua": "googlebot",
     "existkey": "content=\"noodp\"",
-    "regexp": true
+    "regexp": true,
+    "browser": false
 }
 ```
 

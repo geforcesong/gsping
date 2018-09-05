@@ -1,9 +1,11 @@
 {
     "isMobile": false,
     "url": "https://www.google.com",
-    "times":5,
+    "times": 10,
     "method": "GET",
     "ua": "googlebot",
+    "batch": 5,
     "existkey": "content=\"noodp\"",
-    "regexp": true
+    "regexp": true,
+    "browser": true
 }
