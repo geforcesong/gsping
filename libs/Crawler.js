@@ -2,6 +2,7 @@ const request = require('request');
 const CrawlerLogger = require('./CrawlerLogger');
 const ccolors = require('../utility/ccolors');
 const Common = require('../utility/common');
+const BrowserCrawler = require('./BrowserCrawler');
 
 class Crawler {
     constructor(options) {
@@ -14,6 +15,7 @@ class Crawler {
         this.existkey = options.existkey;
         this.method = options.method;
         this.body = options.body;
+        this._browserCrawler = new BrowserCrawler(this.url);
     }
 
     _showCrawlInfo() {
@@ -36,8 +38,10 @@ class Crawler {
         let processedCount = 0;
         while (processedCount < this.times) {
             let batchPromises = [];
+            let browerIndicatorPromises = [];
             for (var i = processedCount; i < (processedCount + this.batchCount) && i < this.times; i++) {
                 batchPromises.push(this._crawOnce());
+                browerIndicatorPromises.push(this._browserCrawler.crawOnce());
             }
             let ret = await Promise.all(batchPromises);
             if (ret && ret.length) {
@@ -47,6 +51,8 @@ class Crawler {
                     }
                 });
             }
+            let browserRet = await Promise.all(browerIndicatorPromises);
+            console.log(browserRet);
             processedCount += this.batchCount;
             crawlerLogger.showAvg();
             if (processedCount < this.times && this.interval) {
@@ -95,6 +101,7 @@ class Crawler {
             });
         });
     }
+
 }
 
 module.exports = Crawler;
