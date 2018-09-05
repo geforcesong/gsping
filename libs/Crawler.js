@@ -83,7 +83,8 @@ class Crawler {
                         dnsLookup: resp.timings.lookup,
                         connect: resp.timings.connect,
                         socket: resp.timings.socket
-                    }
+                    },
+                    statusCode: resp.statusCode || 'NAN'
                 };
                 if (resp.body && self.existkey) {
                     result.existkey = self.existkey;

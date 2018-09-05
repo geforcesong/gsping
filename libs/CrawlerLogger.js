@@ -1,7 +1,3 @@
-const colors = require('colors/safe');
-const green = colors.green;
-const red = colors.red;
-const gray = colors.gray;
 const ccolor = require('../utility/ccolors');
 const validateInput = Symbol('VALIDATEINPUT');
 
@@ -42,31 +38,39 @@ class Logger {
     showRecord(data) {
         let strResult = '';
         const timingObj = data.timing;
+        let statusCode = data.statusCode;
+        if (statusCode >= 200 && statusCode < 300) {
+            statusCode = ccolor.green(statusCode);
+        } else if (statusCode >= 300 && statusCode < 400) {
+            statusCode = ccolor.yellow(statusCode);
+        } else {
+            statusCode = ccolor.red(statusCode);
+        }
 
-        strResult += ` Socket: ${timingObj.socket.toFixed(2)}`.padEnd(20);
+        strResult += ` ${statusCode}`.padEnd(5);
         strResult += ` DnsLookup: ${timingObj.dnsLookup.toFixed(2)}`.padEnd(20);
         strResult += ` Connect: ${timingObj.connect.toFixed(2)}`.padEnd(20);
         strResult += ` FirstByte: ${timingObj.firstByte.toFixed(2)}`.padEnd(23);
         strResult += ` ResponseTotal: ${timingObj.responseTotal.toFixed(2)}`.padEnd(25);
 
         if (data.existkeyCheckResult) {
-            strResult += ` keycheck: ${data.existkeyCheckResult.includes('NOT') ? red(data.existkeyCheckResult) : green(data.existkeyCheckResult)}, key is ${data.existkey}.`;
+            strResult += ` keycheck: ${data.existkeyCheckResult.includes('NOT') ? ccolor.red(data.existkeyCheckResult) : ccolor.green(data.existkeyCheckResult)}, key is ${data.existkey}.`;
         }
         console.log(`${this.crawledCount}.`.padEnd(4) + ` ${strResult}`);
     }
 
     showAvg() {
         if (!this.sumData.size) {
-            console.log(red('There is no data to show!!!'));
+            console.log(ccolor.red('There is no data to show!!!'));
             return;
         }
-        let summary = colors.yellow('avg -');
-        summary += ` Socket: ${ccolor.green((this.sumData.get('socket') / this.crawledCount).toFixed(0), { padEnd: 11 })}`;
+        let summary = ccolor.yellow('avg -'.padEnd(9));
+        // summary += ` Socket: ${ccolor.green((this.sumData.get('socket') / this.crawledCount).toFixed(0), { padEnd: 11 })}`;
         summary += ` DnsLookup: ${ccolor.green((this.sumData.get('dnsLookup') / this.crawledCount).toFixed(0), { padEnd: 8 })}`;
         summary += ` Connect: ${ccolor.green((this.sumData.get('connect') / this.crawledCount).toFixed(0), { padEnd: 10 })}`;
         summary += ` FirstByte: ${ccolor.green((this.sumData.get('firstByte') / this.crawledCount).toFixed(0), { padEnd: 11 })}`;
         summary += ` ResponseTotal: ${ccolor.green((this.sumData.get('responseTotal') / this.crawledCount).toFixed(0), { padEnd: 10 })}`;
-        console.log(gray(summary));
+        console.log(ccolor.gray(summary));
     }
 }
 

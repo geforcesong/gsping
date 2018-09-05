@@ -46,6 +46,10 @@ class CColor {
     static yellow(input, options) {
         return CColor[basecolor]('yellow', input, options);
     }
+
+    static gray(input, options) {
+        return CColor[basecolor]('gray', input, options);
+    }
 }
 
 module.exports = CColor;
