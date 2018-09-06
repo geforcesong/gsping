@@ -83,7 +83,8 @@ class Crawler {
                 uri: this.url,
                 method: this.method || 'GET',
                 body: this.body || undefined,
-                time: true
+                time: true,
+                followRedirect: false
             }, (err, resp) => {
                 if (err) {
                     return reject(err);
