@@ -92,9 +92,9 @@ class Crawler {
                 if (!resp.timings || !resp.timingPhases) {
                     return resolve(null);
                 }
-                if (resp.statusCode !== 200) {
-                    console.log(ccolors.red(`Error in url(${self.url}), status: ${resp.statusCode}`));
-                }
+                // if (resp.statusCode !== 200) {
+                //     console.log(ccolors.red(`Error in url(${self.url}), status: ${resp.statusCode}`));
+                // }
                 let result = {
                     timing: {
                         firstByte: resp.timingPhases.firstByte,
