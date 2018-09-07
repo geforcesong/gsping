@@ -54,7 +54,6 @@ class Crawler {
                     }
                 });
             }
-            crawlerLogger.showAvg();
             if (this._browserCrawler) {
                 let browserRet = await Promise.all(browerIndicatorPromises);
                 if (browserRet && browserRet.length) {
@@ -71,6 +70,7 @@ class Crawler {
                 await Common.delay(this.interval);
             }
         }
+        crawlerLogger.showAvg();
     }
 
     async _crawOnce() {
