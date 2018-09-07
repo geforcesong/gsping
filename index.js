@@ -37,11 +37,11 @@ function showHelp() {
     console.log(ccolors.yellow('Look like you need set correct parameters, please check the below usage:'));
     console.log('You can also go to https://www.npmjs.com/package/gsping for more details.');
     console.log();
-    console.log(columnify(helps,{
+    console.log(columnify(helps, {
         minWidth: 15,
         config: {
-            comment: {maxWidth: 70}
+            comment: { maxWidth: 70 }
         }
-      }));
+    }));
     console.log();
 }
