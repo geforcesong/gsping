@@ -3,6 +3,9 @@ const minimist = require('minimist');
 const Crawler = require('./libs/Crawler');
 const pkg = require('./package.json');
 const InputMan = require('./inputMan');
+const helps = require('./help.json');
+const columnify = require('columnify');
+const ccolors = require('./utility/ccolors');
 
 (async _ => {
     const args = minimist(process.argv.slice(2));
@@ -31,12 +34,14 @@ const InputMan = require('./inputMan');
 })();
 
 function showHelp() {
-    console.log('use -v show current running version.');
-    console.log('use -u <url> to specify a url to test');
-    console.log('use -t <number> to indicate how many times');
-    console.log('use -m to use mobile user agent');
-    console.log('use --batch to set batch crawling count');
-    console.log('use --existkey this is keyword to check if it exists in response.');
-    console.log('use --interval to set crawling interval time in miliseconds');
-    console.log('use --ua <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot');
+    console.log(ccolors.yellow('Look like you need set correct parameters, please check the below usage:'));
+    console.log('You can also go to https://www.npmjs.com/package/gsping for more details.');
+    console.log();
+    console.log(columnify(helps,{
+        minWidth: 15,
+        config: {
+            comment: {maxWidth: 70}
+        }
+      }));
+    console.log();
 }

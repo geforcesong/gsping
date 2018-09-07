@@ -1,0 +1,25 @@
+[{
+    "parameter": "-v",
+    "comment": "show current running version."
+},{
+    "parameter": "-u",
+    "comment": "<url> to specify a url to test."
+},{
+    "parameter": "-t",
+    "comment": "<number> to indicate how many times."
+},{
+    "parameter": "-m",
+    "comment": "use mobile user agent"
+},{
+    "parameter": "--batch",
+    "comment": "to set batch crawling count"
+},{
+    "parameter": "--existkey",
+    "comment": "this is keyword to check if it exists in response."
+},{
+    "parameter": "--interval",
+    "comment": "to set crawling interval time in miliseconds"
+},{
+    "parameter": "--ua",
+    "comment": "<useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot"
+}]
