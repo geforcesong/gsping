@@ -6,6 +6,7 @@ const InputMan = require('./inputMan');
 const helps = require('./help.json');
 const columnify = require('columnify');
 const ccolors = require('./utility/ccolors');
+const ParameterError = require('./libs/errors/ParameterError');
 
 (async _ => {
     const args = minimist(process.argv.slice(2));
@@ -22,8 +23,13 @@ const ccolors = require('./utility/ccolors');
             return showHelp();
         }
     } catch (err) {
-        console.log(err);
-        return showHelp();
+        if (err.constructor === ParameterError) {
+            console.log(ccolors.red(err.message));
+            showHelp();
+        } else {
+            console.log(err);
+        }
+        return;
     }
     try {
         let c = new Crawler(options);

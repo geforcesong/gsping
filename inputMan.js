@@ -2,6 +2,7 @@ const ccolors = require('./utility/ccolors');
 const uaJson = require('./configs/ua.json');
 const constants = require('./utility/constants');
 const path = require('path');
+const ParameterError = require('./libs/errors/ParameterError');
 
 class InputMan {
     constructor(args) {
@@ -72,29 +73,29 @@ class InputMan {
 
     _validateOptions(options) {
         if (!options) {
-            throw new Error('Configuration is not existed.');
+            throw new ParameterError('Configuration is not existed.');
         }
 
         if (!options.url) {
-            throw new Error('You must specify a url.');
+            throw new ParameterError('You must specify a url.');
         }
 
         if (options.times && isNaN(options.times)) {
-            throw new Error('This is not a valid number for times');
+            throw new ParameterError('This is not a valid number for times');
         }
 
         if (options.batch && isNaN(options.batch)) {
-            throw new Error('This is not a valid number for batch');
+            throw new ParameterError('This is not a valid number for batch');
         }
 
         if ((options.interval && isNaN(options.interval)) || options.interval < 0 || options.interval === true) {
-            throw new Error('This is not a valid number for interval');
+            throw new ParameterError('This is not a valid number for interval');
         }
 
         if (options.method) {
             options.method = options.method.toUpperCase();
             if (!['GET', 'POST', 'PUT', 'DELETE'].includes(options.method)) {
-                throw new Error('This is not a valid http method');
+                throw new ParameterError('This is not a valid http method');
             }
         }
     }
