@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const minimist = require('minimist');
-const Crawler = require('./libs/Crawler');
+const Crawler = require('./libs/crawlers/RawCrawler');
 const pkg = require('./package.json');
 const InputMan = require('./inputMan');
 const helps = require('./help.json');
@@ -33,7 +33,9 @@ const ParameterError = require('./libs/errors/ParameterError');
     }
     try {
         let c = new Crawler(options);
+        c.showCrawlerInfo();
         await c.crawl();
+        c.showResult();
     } catch (err) {
         console.log(err);
     }
