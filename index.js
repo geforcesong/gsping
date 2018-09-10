@@ -61,5 +61,9 @@ function showHelp() {
             comment: { maxWidth: 70 }
         }
     }));
+
+    console.log();
+    console.log('Command example: gsping -u https://example.com --interval 3000 -t 10 --batch 3 --detail');
+    console.log(' Config example: gsping --config ./gsping.config.json');
     console.log();
 }

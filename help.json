@@ -1,31 +1,42 @@
-[{
-    "parameter": "-v",
-    "comment": "show current running version."
-},{
-    "parameter": "-u",
-    "comment": "<url> to specify a url to test."
-},{
-    "parameter": "-t",
-    "comment": "<number> to indicate how many times."
-},{
-    "parameter": "-m",
-    "comment": "use mobile user agent"
-},{
-    "parameter": "--batch",
-    "comment": "to set batch crawling count"
-},{
-    "parameter": "--existkey",
-    "comment": "this is keyword to check if it exists in response."
-},{
-    "parameter": "--interval",
-    "comment": "to set crawling interval time in miliseconds"
-},{
-    "parameter": "--ua",
-    "comment": "<useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot"
-},{
-    "parameter": "--mode",
-    "comment": "Use what kind of cralwer to test. Browser is headless chrome. valid values: RAW(default), BROWSER, BOTH."
-},{
-    "parameter": "--detail",
-    "comment": "Show the result data for every crawling."
-}]
+[
+    {
+        "parameter": "-v",
+        "comment": "show current running version."
+    },
+    {
+        "parameter": "-u",
+        "comment": "<url> to specify a url to test."
+    },
+    {
+        "parameter": "-t",
+        "comment": "<number> to indicate how many times."
+    },
+    {
+        "parameter": "-m",
+        "comment": "use mobile user agent"
+    },
+    {
+        "parameter": "--batch",
+        "comment": "<number> to set batch crawling count"
+    },
+    {
+        "parameter": "--existkey",
+        "comment": "<key> to check. This is keyword to check if it exists in response."
+    },
+    {
+        "parameter": "--interval",
+        "comment": "<number> in ms. To set crawling interval time in miliseconds"
+    },
+    {
+        "parameter": "--ua",
+        "comment": "<useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot"
+    },
+    {
+        "parameter": "--mode",
+        "comment": "<mode> to indicate use what kind of cralwer to test. Browser is headless chrome. valid values: RAW(default), BROWSER, BOTH."
+    },
+    {
+        "parameter": "--detail",
+        "comment": "Show the result data for every crawling."
+    }
+]
