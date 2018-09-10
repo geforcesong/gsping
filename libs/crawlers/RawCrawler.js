@@ -88,6 +88,12 @@ class RawCrawler extends CrawlerBase {
                 checked: '-'
             });
         }
+
+        if (!this.existkey) {
+            resToDisplay.forEach((v) => {
+                delete v.checked;
+            });
+        }
         return super.showResult(resToDisplay);
     }
 }
