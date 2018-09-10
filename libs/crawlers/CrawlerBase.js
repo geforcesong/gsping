@@ -52,7 +52,9 @@ class CrawlerBase {
         }
         console.log(info);
         console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
-        console.log(`Will check whether the response contains ${ccolors.cyan(this.existkey)}`);
+        if (this.existkey && this.mode === 'RAW') {
+            console.log(`Will check whether the response contains ${ccolors.cyan(this.existkey)}`);
+        }
         console.log();
     }
 
