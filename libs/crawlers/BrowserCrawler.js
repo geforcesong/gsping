@@ -10,6 +10,7 @@ class BrowserCrawler extends CrawlerBase {
 
     async _crawOnce(options) {
         const opt = options || {};
+        
         // const browser = await puppeteer.launch({
         //     args: ['--disable-setuid-sandbox', '--no-sandbox']
         // });
@@ -91,8 +92,7 @@ class BrowserCrawler extends CrawlerBase {
                     domContentLoaded: (total.domContentLoadedEventStart / totalCount).toFixed(0),
                     domComplete: (total.domComplete / totalCount).toFixed(0),
                     loadEventStart: (total.loadEventStart / totalCount).toFixed(0),
-                    loadEventEnd: (total.loadEventEnd / totalCount).toFixed(0),
-
+                    loadEventEnd: (total.loadEventEnd / totalCount).toFixed(0)
                 });
             }
             return super.showResult(resToDisplay);
