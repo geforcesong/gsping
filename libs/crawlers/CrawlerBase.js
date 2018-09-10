@@ -26,7 +26,7 @@ class CrawlerBase {
         }
         console.log(info);
         console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
-        console.log(`will check weather response contains ${ccolors.cyan(this.existkey)}`);
+        console.log(`Will check whether the response contains ${ccolors.cyan(this.existkey)}`);
         console.log();
     }
 

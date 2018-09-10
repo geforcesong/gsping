@@ -67,11 +67,19 @@ class RawCrawler extends CrawlerBase {
         }
         console.log();
         console.log('Crawl finished waiting for the results...');
+        console.log();
     }
 
     showResult() {
         let resToDisplay = [];
         let index = 1;
+        const total = {
+            dnsLookup: 0,
+            connect: 0,
+            firstByte: 0,
+            responseTotal: 0
+        };
+        const totalCount = this.crawledData.length;
         if (this.crawledData && this.crawledData.length) {
             resToDisplay = this.crawledData.map(value => {
                 let coloredStatus = value.statusCode;
@@ -82,6 +90,10 @@ class RawCrawler extends CrawlerBase {
                 } else {
                     coloredStatus = ccolors.red(value.statusCode);
                 }
+                total.dnsLookup += value.timing.dnsLookup;
+                total.connect += value.timing.connect;
+                total.firstByte += value.timing.firstByte;
+                total.responseTotal += value.timing.responseTotal;
                 return {
                     index: index++,
                     statusCode: coloredStatus,
@@ -91,6 +103,17 @@ class RawCrawler extends CrawlerBase {
                     responseTotal: value.timing.responseTotal.toFixed(0),
                     checked: value.existkeyCheckResult === 'FOUND' ? ccolors.green(value.existkeyCheckResult) : ccolors.red(value.existkeyCheckResult)
                 };
+            });
+        }
+        if (totalCount) {
+            resToDisplay.push({
+                index: ccolors.cyan('AVG'),
+                statusCode: '-',
+                dnsLookup: ccolors.cyan((total.dnsLookup / totalCount).toFixed(0)),
+                connect: ccolors.cyan((total.connect / totalCount).toFixed(0)),
+                firstByte: ccolors.cyan((total.firstByte / totalCount).toFixed(0)),
+                responseTotal: ccolors.cyan((total.responseTotal / totalCount).toFixed(0)),
+                checked: '-'
             });
         }
         return super.showResult(resToDisplay);
