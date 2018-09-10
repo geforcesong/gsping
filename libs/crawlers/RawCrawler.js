@@ -81,7 +81,7 @@ class RawCrawler extends CrawlerBase {
         };
         const totalCount = this.crawledData.length;
         if (this.crawledData && this.crawledData.length) {
-            resToDisplay = this.crawledData.map(value => {
+            this.crawledData.forEach(value => {
                 let coloredStatus = value.statusCode;
                 if (coloredStatus >= 200 && coloredStatus < 300) {
                     coloredStatus = ccolors.green(value.statusCode);
@@ -94,15 +94,17 @@ class RawCrawler extends CrawlerBase {
                 total.connect += value.timing.connect;
                 total.firstByte += value.timing.firstByte;
                 total.responseTotal += value.timing.responseTotal;
-                return {
-                    index: index++,
-                    statusCode: coloredStatus,
-                    dnsLookup: value.timing.dnsLookup.toFixed(0),
-                    connect: value.timing.connect.toFixed(0),
-                    firstByte: value.timing.firstByte.toFixed(0),
-                    responseTotal: value.timing.responseTotal.toFixed(0),
-                    checked: value.existkeyCheckResult === 'FOUND' ? ccolors.green(value.existkeyCheckResult) : ccolors.red(value.existkeyCheckResult)
-                };
+                if (this.detail) {
+                    resToDisplay.push({
+                        index: index++,
+                        statusCode: coloredStatus,
+                        dnsLookup: value.timing.dnsLookup.toFixed(0),
+                        connect: value.timing.connect.toFixed(0),
+                        firstByte: value.timing.firstByte.toFixed(0),
+                        responseTotal: value.timing.responseTotal.toFixed(0),
+                        checked: value.existkeyCheckResult === 'FOUND' ? ccolors.green(value.existkeyCheckResult) : ccolors.red(value.existkeyCheckResult)
+                    });
+                }
             });
         }
         if (totalCount) {

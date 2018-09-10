@@ -69,6 +69,7 @@ class InputMan {
         if (!options.method) {
             options.method = 'GET';
         }
+        options.detail = !!(options.detail);
     }
 
     _validateOptions(options) {

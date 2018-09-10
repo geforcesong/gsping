@@ -8,5 +8,6 @@
     "interval": 3000,
     "existkey": "content=\"noodp\"",
     "regexp": true,
-    "browser": false
+    "browser": false,
+    "detail": true
 }

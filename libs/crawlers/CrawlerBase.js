@@ -14,6 +14,7 @@ class CrawlerBase {
         this.body = options.body;
         this.mode = options.mode || 'RAW';
         this.crawledData = [];
+        this.detail = options.detail;
     }
 
     showCrawlerInfo() {
