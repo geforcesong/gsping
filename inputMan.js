@@ -32,7 +32,8 @@ class InputMan {
             existkey: args.existkey,
             regexp: args.regexp,
             browser: args.browser,
-            detail: !!(args.detail)
+            detail: !!(args.detail),
+            mode: args.mode
         };
         return options;
     }
