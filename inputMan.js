@@ -31,7 +31,8 @@ class InputMan {
             interval: args.interval,
             existkey: args.existkey,
             regexp: args.regexp,
-            browser: args.browser
+            browser: args.browser,
+            detail: !!(args.detail)
         };
         return options;
     }
@@ -69,7 +70,6 @@ class InputMan {
         if (!options.method) {
             options.method = 'GET';
         }
-        options.detail = !!(options.detail);
         options.mode = (options.mode || 'RAW').toUpperCase();
     }
 

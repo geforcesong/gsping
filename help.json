@@ -25,4 +25,7 @@
 },{
     "parameter": "--mode",
     "comment": "Use what kind of cralwer to test. Browser is headless chrome. valid values: RAW(default), BROWSER, BOTH."
+},{
+    "parameter": "--detail",
+    "comment": "Show the result data for every crawling."
 }]
