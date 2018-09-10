@@ -1,5 +1,6 @@
 const ccolors = require('../../utility/ccolors');
-var readline = require('readline');
+const readline = require('readline');
+const columnify = require('columnify');
 class CrawlerBase {
     constructor(options) {
         this.url = options.url;
@@ -25,6 +26,7 @@ class CrawlerBase {
         }
         console.log(info);
         console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
+        console.log(`will check weather response contains ${ccolors.cyan(this.existkey)}`);
         console.log();
     }
 
@@ -36,6 +38,15 @@ class CrawlerBase {
         const processedStr = processed.toString().padStart(clength);
         readline.cursorTo(process.stdout, 0);
         process.stdout.write(`Waiting for process analysis ... ${processedStr} of ${total} finished.`);
+    }
+
+    showResult(results) {
+        if (!results || !results.length) {
+            console.log(ccolors.yellow('There is nothing to display, result is not existed'));
+            return;
+        }
+        const content = columnify(results);
+        console.log(content);
     }
 }
 

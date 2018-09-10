@@ -1,6 +1,7 @@
 const CrawlerBase = require('./CrawlerBase');
 const request = require('request');
 const Common = require('../../utility/common');
+const ccolors = require('../../utility/ccolors');
 class RawCrawler extends CrawlerBase {
     constructor(options) {
         options.mode = 'RAW';
@@ -68,11 +69,31 @@ class RawCrawler extends CrawlerBase {
         console.log('Crawl finished waiting for the results...');
     }
 
-    showResult(){
-        if(!this.crawledData || !this.crawledData.length){
-            return;
+    showResult() {
+        let resToDisplay = [];
+        let index = 1;
+        if (this.crawledData && this.crawledData.length) {
+            resToDisplay = this.crawledData.map(value => {
+                let coloredStatus = value.statusCode;
+                if (coloredStatus >= 200 && coloredStatus < 300) {
+                    coloredStatus = ccolors.green(value.statusCode);
+                } else if (coloredStatus >= 300 && coloredStatus < 400) {
+                    coloredStatus = ccolors.yellow(value.statusCode);
+                } else {
+                    coloredStatus = ccolors.red(value.statusCode);
+                }
+                return {
+                    index: index++,
+                    statusCode: coloredStatus,
+                    dnsLookup: value.timing.dnsLookup.toFixed(0),
+                    connect: value.timing.connect.toFixed(0),
+                    firstByte: value.timing.firstByte.toFixed(0),
+                    responseTotal: value.timing.responseTotal.toFixed(0),
+                    checked: value.existkeyCheckResult === 'FOUND' ? ccolors.green(value.existkeyCheckResult) : ccolors.red(value.existkeyCheckResult)
+                };
+            });
         }
-
+        return super.showResult(resToDisplay);
     }
 }
 
