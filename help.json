@@ -22,4 +22,7 @@
 },{
     "parameter": "--ua",
     "comment": "<useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot"
+},{
+    "parameter": "--mode",
+    "comment": "Use what kind of cralwer to test. Browser is headless chrome. valid values: RAW(default), BROWSER, BOTH."
 }]

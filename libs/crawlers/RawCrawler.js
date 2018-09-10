@@ -1,6 +1,8 @@
 const CrawlerBase = require('./CrawlerBase');
 const request = require('request');
 const ccolors = require('../../utility/ccolors');
+const Common = require('../../utility/common');
+
 class RawCrawler extends CrawlerBase {
     constructor(options) {
         super(options);
@@ -58,14 +60,6 @@ class RawCrawler extends CrawlerBase {
         const totalCount = this.crawledData.length;
         if (this.crawledData && this.crawledData.length) {
             this.crawledData.forEach(value => {
-                let coloredStatus = value.statusCode;
-                if (coloredStatus >= 200 && coloredStatus < 300) {
-                    coloredStatus = ccolors.green(value.statusCode);
-                } else if (coloredStatus >= 300 && coloredStatus < 400) {
-                    coloredStatus = ccolors.yellow(value.statusCode);
-                } else {
-                    coloredStatus = ccolors.red(value.statusCode);
-                }
                 total.dnsLookup += value.timing.dnsLookup;
                 total.connect += value.timing.connect;
                 total.firstByte += value.timing.firstByte;
@@ -73,7 +67,7 @@ class RawCrawler extends CrawlerBase {
                 if (this.detail) {
                     resToDisplay.push({
                         index: index++,
-                        statusCode: coloredStatus,
+                        statusCode: Common.getColoredStatus(value.statusCode),
                         dnsLookup: value.timing.dnsLookup.toFixed(0),
                         connect: value.timing.connect.toFixed(0),
                         firstByte: value.timing.firstByte.toFixed(0),

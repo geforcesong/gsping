@@ -10,5 +10,5 @@
     "regexp": true,
     "browser": false,
     "detail": true,
-    "mode":"BOTH"
+    "mode":"BROWSER"
 }

@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const CrawlerBase = require('./CrawlerBase');
 const ccolors = require('../../utility/ccolors');
+const Common = require('../../utility/common');
 
 class BrowserCrawler extends CrawlerBase {
     constructor(options) {
@@ -19,11 +20,12 @@ class BrowserCrawler extends CrawlerBase {
         if (opt.userAgent && opt.userAgent.userAgentString) {
             await page.setUserAgent(opt.userAgent.userAgentString);
         }
-        await page.goto(this.url);
+        const response = await page.goto(this.url);
         const perf = JSON.parse(await page.evaluate(() => {
             return JSON.stringify(performance.timing);
         }));
         let result = {
+            statusCode: response && response.headers().status,
             timing: {}
         };
         if (perf) {
@@ -68,6 +70,7 @@ class BrowserCrawler extends CrawlerBase {
                 if (this.detail) {
                     resToDisplay.push({
                         index: index++,
+                        statusCode: Common.getColoredStatus(value.statusCode),
                         domainLookupEnd: timing.domainLookupEnd,
                         connectEnd: timing.connectEnd,
                         requestStart: timing.requestStart,
@@ -84,6 +87,7 @@ class BrowserCrawler extends CrawlerBase {
             if (totalCount) {
                 resToDisplay.push({
                     index: ccolors.cyan('AVG'),
+                    statusCode: '-',
                     domainLookupEnd: ccolors.cyan((total.domainLookupEnd / totalCount).toFixed(0)),
                     connectEnd: ccolors.cyan((total.connectEnd / totalCount).toFixed(0)),
                     requestStart: ccolors.cyan((total.requestStart / totalCount).toFixed(0)),
