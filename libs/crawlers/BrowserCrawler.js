@@ -10,7 +10,7 @@ class BrowserCrawler extends CrawlerBase {
 
     async _crawOnce(options) {
         const opt = options || {};
-        
+
         // const browser = await puppeteer.launch({
         //     args: ['--disable-setuid-sandbox', '--no-sandbox']
         // });
@@ -84,15 +84,15 @@ class BrowserCrawler extends CrawlerBase {
             if (totalCount) {
                 resToDisplay.push({
                     index: ccolors.cyan('AVG'),
-                    domainLookupEnd: (total.domainLookupEnd / totalCount).toFixed(0),
-                    connectEnd: (total.connectEnd / totalCount).toFixed(0),
-                    requestStart: (total.requestStart / totalCount).toFixed(0),
-                    responseStart: (total.responseStart / totalCount).toFixed(0),
-                    responseEnd: (total.responseEnd / totalCount).toFixed(0),
-                    domContentLoaded: (total.domContentLoadedEventStart / totalCount).toFixed(0),
-                    domComplete: (total.domComplete / totalCount).toFixed(0),
-                    loadEventStart: (total.loadEventStart / totalCount).toFixed(0),
-                    loadEventEnd: (total.loadEventEnd / totalCount).toFixed(0)
+                    domainLookupEnd: ccolors.cyan((total.domainLookupEnd / totalCount).toFixed(0)),
+                    connectEnd: ccolors.cyan((total.connectEnd / totalCount).toFixed(0)),
+                    requestStart: ccolors.cyan((total.requestStart / totalCount).toFixed(0)),
+                    responseStart: ccolors.cyan((total.responseStart / totalCount).toFixed(0)),
+                    responseEnd: ccolors.cyan((total.responseEnd / totalCount).toFixed(0)),
+                    domContentLoaded: ccolors.cyan((total.domContentLoadedEventStart / totalCount).toFixed(0)),
+                    domComplete: ccolors.cyan((total.domComplete / totalCount).toFixed(0)),
+                    loadEventStart: ccolors.cyan((total.loadEventStart / totalCount).toFixed(0)),
+                    loadEventEnd: ccolors.cyan((total.loadEventEnd / totalCount).toFixed(0))
                 });
             }
             return super.showResult(resToDisplay);
