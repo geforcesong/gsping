@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const minimist = require('minimist');
-const Crawler = require('./libs/crawlers/RawCrawler');
+const RawCrawler = require('./libs/crawlers/RawCrawler');
+const BrowserCrawler = require('./libs/crawlers/BrowserCrawler');
 const pkg = require('./package.json');
 const InputMan = require('./inputMan');
 const helps = require('./help.json');
@@ -32,10 +33,19 @@ const ParameterError = require('./libs/errors/ParameterError');
         return;
     }
     try {
-        let c = new Crawler(options);
-        c.showCrawlerInfo();
-        await c.crawl();
-        c.showResult();
+        if (options.mode !== 'BROWSER') {
+            let raw = new RawCrawler(options);
+            raw.showCrawlerInfo();
+            await raw.crawl();
+            raw.showResult();
+        }
+
+        if (options.mode !== 'RAW') {
+            let browser = new BrowserCrawler(options);
+            browser.showCrawlerInfo();
+            await browser.crawl();
+            browser.showResult();
+        }
     } catch (err) {
         console.log(err);
     }

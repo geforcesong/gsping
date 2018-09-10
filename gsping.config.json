@@ -9,5 +9,6 @@
     "existkey": "content=\"noodp\"",
     "regexp": true,
     "browser": false,
-    "detail": true
+    "detail": true,
+    "mode": "BROWSER"
 }

@@ -70,6 +70,7 @@ class InputMan {
             options.method = 'GET';
         }
         options.detail = !!(options.detail);
+        options.mode = (options.mode || 'BOTH').toUpperCase();
     }
 
     _validateOptions(options) {
