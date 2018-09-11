@@ -68,7 +68,7 @@ gsping -u https://www.google.com -t 5 -m --ua googlebot
 > example checking some string existing in response
 
 ```zsh
-gsping -u https://www.google.com -t 10 --existkey itemtype=\"http://schema.org/WebPage\"
+gsping -u https://www.google.com -t 10 --existkey itemtype=\"http://schema.org/WebPage\" --detail
 ```
 
 ![Usage animation](demo.gif)
