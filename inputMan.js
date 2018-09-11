@@ -31,7 +31,6 @@ class InputMan {
             interval: args.interval,
             existkey: args.existkey,
             regexp: args.regexp,
-            browser: args.browser,
             detail: !!(args.detail),
             mode: args.mode
         };

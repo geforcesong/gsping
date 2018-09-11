@@ -14,15 +14,15 @@ npm install -g gsping
 ## Parameters ##
 
 * **-v** show current running version.
-* **-u** <url> to specify a url to test
-* **-t** <number> to indicate how many times
-* **-m** to use mobile user agent
-* **--batch** to set batch crawling count
-* **--existkey** this is keyword to check if it exists in response.
-* **--interval** to set crawling interval time in miliseconds
-* **--ua** <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot
-* **--browser** use headless browser to check the performce. it is using performance.timing and give you a table average results.
-
+* **-u** <url> to specify a url to test.
+* **-t** <number> to indicate how many times.
+* **-m** to use mobile user agent.
+* **--batch** <number> to set batch crawling count.
+* **--existkey** <key> to check. This is keyword to check if it exists in response.
+* **--interval** <number> in ms. To set crawling interval time in miliseconds.
+* **--ua** <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot.
+* **--mode** <mode> to indicate use what kind of cralwer to test. Browser is headless chrome. valid values: RAW(default), BROWSER, BOTH.
+* **--detail** Show the result data for every crawling.
 ## Using config ##
 
 ```bash

@@ -13,11 +13,11 @@
     },
     {
         "parameter": "-m",
-        "comment": "use mobile user agent"
+        "comment": "use mobile user agent."
     },
     {
         "parameter": "--batch",
-        "comment": "<number> to set batch crawling count"
+        "comment": "<number> to set batch crawling count."
     },
     {
         "parameter": "--existkey",
@@ -25,11 +25,11 @@
     },
     {
         "parameter": "--interval",
-        "comment": "<number> in ms. To set crawling interval time in miliseconds"
+        "comment": "<number> in ms. To set crawling interval time in miliseconds."
     },
     {
         "parameter": "--ua",
-        "comment": "<useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot"
+        "comment": "<useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot."
     },
     {
         "parameter": "--mode",
