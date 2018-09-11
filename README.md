@@ -19,6 +19,7 @@ npm install -g gsping
 * **-m** to use mobile user agent.
 * **--batch** <number> to set batch crawling count.
 * **--existkey** <key> to check. This is keyword to check if it exists in response.
+* **--regexp** when set --existkey, use this flag to indicate if it is a regular expression.
 * **--interval** <number> in ms. To set crawling interval time in miliseconds.
 * **--ua** <useragent> to indicate what ua you want to use. valid values: chrome(default), googlebot.
 * **--mode** <mode> to indicate use what kind of cralwer to test. Browser is headless chrome. valid values: RAW(default), BROWSER, BOTH.
@@ -40,7 +41,7 @@ gsping --config ./gsping.config.json
     "ua": "googlebot",
     "existkey": "content=\"noodp\"",
     "regexp": true,
-    "browser": false
+    "mode": "browser"
 }
 ```
 

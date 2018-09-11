@@ -30,7 +30,7 @@ class InputMan {
             batch: args.batch,
             interval: args.interval,
             existkey: args.existkey,
-            regexp: args.regexp,
+            regexp: !!(args.regexp),
             detail: !!(args.detail),
             mode: args.mode
         };

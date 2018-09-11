@@ -24,6 +24,10 @@
         "comment": "<key> to check. This is keyword to check if it exists in response."
     },
     {
+        "parameter": "--regexp",
+        "comment": "when set --existkey, use this flag to indicate if it is a regular expression."
+    },
+    {
         "parameter": "--interval",
         "comment": "<number> in ms. To set crawling interval time in miliseconds."
     },
