@@ -9,16 +9,39 @@ class BrowserCrawler extends CrawlerBase {
         this.mode = 'BROWSER';
     }
 
-    async _crawOnce(options) {
-        const opt = options || {};
+    async crawl() {
+        let processedCount = 0;
+        const browser = await puppeteer.launch();
+        const batchCount = this.batchCount;
+        while (processedCount < this.times) {
+            let batchPromises = [];
+            for (var i = processedCount; i < (processedCount + batchCount) && i < this.times; i++) {
+                batchPromises.push(this._crawOnceByPage(browser));
+                this.showProgress(i + 1, this.times);
+            }
+            let ret = await Promise.all(batchPromises);
+            if (ret && ret.length) {
+                this.crawledData = this.crawledData.concat(ret);
+            }
+            processedCount += this.batchCount;
+            if (processedCount < this.times && this.interval) {
+                await Common.delay(this.interval);
+            }
+        }
+        await browser.close();
+        console.log();
+        console.log('Crawl finished waiting for the results...');
+        console.log();
+    }
 
+    async _crawOnceByPage(browser) {
         // const browser = await puppeteer.launch({
         //     args: ['--disable-setuid-sandbox', '--no-sandbox']
         // });
-        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        if (opt.userAgent && opt.userAgent.userAgentString) {
-            await page.setUserAgent(opt.userAgent.userAgentString);
+        if (this.userAgent && this.userAgent.userAgentString) {
+            await page.setUserAgent(this.userAgent.userAgentString);
         }
         const response = await page.goto(this.url);
         const perf = JSON.parse(await page.evaluate(() => {
@@ -35,7 +58,7 @@ class BrowserCrawler extends CrawlerBase {
                 }
             });
         }
-        await browser.close();
+        await page.close();
         return Object.keys(result).length ? result : null;
     }
 
