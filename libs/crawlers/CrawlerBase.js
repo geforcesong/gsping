@@ -19,7 +19,7 @@ class CrawlerBase {
     }
 
     showCrawlerInfo() {
-        let info = `${this.mode} Crawling Url ${ccolors.cyan(this.method)}: ${ccolors.yellow(this.url)}, total round ${this.times}. `;
+        let info = `Crawling Url ${ccolors.cyan(this.method)}: ${ccolors.yellow(this.url)}, total round ${this.times}. `;
         if (this.batchCount) {
             info += `batch: ${this.batchCount}. `;
         }
@@ -28,7 +28,7 @@ class CrawlerBase {
         }
         console.log(info);
         console.log(`user-agent-${this.isMobile ? 'mobile' : 'desktop'}-${this.userAgent.name}: ${this.userAgent.userAgentString}`);
-        if (this.existkey && this.mode === 'RAW') {
+        if (this.existkey) {
             console.log(`Will check whether the response contains ${ccolors.cyan(this.existkey)}`);
         }
         console.log();

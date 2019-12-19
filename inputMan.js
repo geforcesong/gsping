@@ -31,8 +31,7 @@ class InputMan {
             interval: args.interval,
             existkey: args.existkey,
             regexp: !!(args.regexp),
-            detail: !!(args.detail),
-            mode: args.mode
+            detail: !!(args.detail)
         };
         return options;
     }
@@ -70,7 +69,6 @@ class InputMan {
         if (!options.method) {
             options.method = 'GET';
         }
-        options.mode = (options.mode || 'RAW').toUpperCase();
     }
 
     _validateOptions(options) {
@@ -98,12 +96,6 @@ class InputMan {
             options.method = options.method.toUpperCase();
             if (!['GET', 'POST', 'PUT', 'DELETE'].includes(options.method)) {
                 throw new ParameterError('This is not a valid http method');
-            }
-        }
-
-        if (options.mode) {
-            if (!['BOTH', 'RAW', 'BROWSER'].includes(options.mode)) {
-                throw new ParameterError('This is not a valid mode. Accept BOTH, RAW, BROWSER');
             }
         }
     }

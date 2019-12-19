@@ -6,7 +6,6 @@ const Common = require('../../utility/common');
 class RawCrawler extends CrawlerBase {
     constructor(options) {
         super(options);
-        this.mode = 'RAW';
     }
 
     async crawl() {
