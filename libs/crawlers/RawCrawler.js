@@ -8,13 +8,13 @@ class RawCrawler extends CrawlerBase {
         super(options);
     }
 
-    async crawl() {
+    async crawlSingleUrl() {
         let processedCount = 0;
         const batchCount = this.batchCount;
         while (processedCount < this.times) {
             let batchPromises = [];
             for (var i = processedCount; i < (processedCount + batchCount) && i < this.times; i++) {
-                batchPromises.push(this._crawOnce());
+                batchPromises.push(this._crawOnce(this.url));
                 this.showProgress(i + 1, this.times);
             }
             let ret = await Promise.all(batchPromises);
@@ -31,14 +31,25 @@ class RawCrawler extends CrawlerBase {
         console.log();
     }
 
-    async _crawOnce() {
+    async crawlMultipleUrls() {
+        console.log('hahah');
+    }
+
+    async crawl(){
+        if(this.mode === 'String'){
+            return await this.crawlSingleUrl();
+        }
+        return await this.crawlMultipleUrls();
+    }
+
+    async _crawOnce(url) {
         let self = this;
         return new Promise((resolve, reject) => {
             request({
                 headers: {
                     'User-Agent': self.userAgent && self.userAgent.userAgentString
                 },
-                uri: this.url,
+                uri: url,
                 method: this.method || 'GET',
                 body: this.body || undefined,
                 time: true,

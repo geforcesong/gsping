@@ -16,10 +16,11 @@ class CrawlerBase {
         this.body = options.body;
         this.crawledData = [];
         this.detail = options.detail;
+        this.mode = Array.isArray(this.url) ? 'List' : 'String';
     }
 
     showCrawlerInfo() {
-        let info = `Crawling Url ${ccolors.cyan(this.method)}: ${ccolors.yellow(this.url)}, total round ${this.times}. `;
+        let info = `Crawling Url ${ccolors.cyan(this.method)}: ${ccolors.yellow(this.mode === 'String' ? this.url : 'urls')}, total round ${this.times}. `;
         if (this.batchCount) {
             info += `batch: ${this.batchCount}. `;
         }
