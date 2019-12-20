@@ -14,7 +14,7 @@ npm install -g gsping
 ## Parameters ##
 
 * **-v** show current running version.
-* **-u** <url> to specify a url to test.
+* **-u** <url> to specify a url to test. it could be an array to provide a list of urls, in this case, everytime will get a batch count urls to crawl
 * **-t** <number> to indicate how many times.
 * **-m** to use mobile user agent.
 * **--batch** <number> to set batch crawling count.

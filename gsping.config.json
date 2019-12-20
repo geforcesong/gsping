@@ -1,13 +1,19 @@
 {
     "isMobile": false,
-    "url": "https://www.google.com",
-    "times": 10,
+    "url": [
+        "https://www.movoto.com/", 
+        "https://www.movoto.com/santa-ana-ca/5209-w-wisteria-pl-santa-ana-ca-92704/pid_kp4f3x538g/for-sale/",
+        "https://www.movoto.com/schools/westminster-ca/sarah-mcgarvin-intermediate-school-061488001861/",
+        "https://www.movoto.com/san-mateo-ca/@37.5629917,-122.3255254/",
+        "https://www.movoto.com/new-york-ny/@40.7127753,-74.0059728/"
+    ],
+    "times": 5,
     "method": "GET",
     "ua": "googlebot",
-    "batch": 5,
+    "batch": 3,
     "interval": 3000,
-    "existkey": "content=\"noodp\"",
-    "regexp": true,
+    "existkey": "",
+    "regexp": false,
     "browser": false,
     "detail": true
 }

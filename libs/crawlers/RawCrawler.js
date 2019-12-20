@@ -32,7 +32,27 @@ class RawCrawler extends CrawlerBase {
     }
 
     async crawlMultipleUrls() {
-        console.log('hahah');
+        for (let processedTime = 0; processedTime < this.times; processedTime++) {
+            let batchPromises = [];
+            let batchCount = Math.min(this.batchCount, this.url.length);
+            const indexes = Common.getRandom0ToMaxNums(this.url.length - 1, batchCount);
+            console.log(`Crawling round: ${processedTime + 1}`);
+            for (let index of indexes) {
+                const cUrl = this.url[index];
+                batchPromises.push(this._crawOnce(cUrl));
+                console.log(`Crawling url: ${cUrl}`);
+            }
+            let ret = await Promise.all(batchPromises);
+            if (ret && ret.length) {
+                this.crawledData = this.crawledData.concat(ret);
+            }
+            if (this.interval) {
+                await Common.delay(this.interval);
+            }
+        }
+        console.log();
+        console.log('Crawl finished waiting for the results...');
+        console.log();
     }
 
     async crawl(){

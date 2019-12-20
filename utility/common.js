@@ -20,6 +20,26 @@ class Common {
         }
         return ccolors.red(code);
     }
+
+    static getRandom0ToMaxNums(max, count) {
+        const list = [];
+        for (var i = 0; i <= max; i++) {
+            list.push(i);
+        }
+        return Common.shuffle(list).slice(0, count);
+    }
+
+    static shuffle(array) {
+        let counter = array.length, temp, index;
+        while (counter--) {
+            // Pick a random index
+            index = (Math.random() * (counter + 1)) | 0;
+            temp = array[counter];
+            array[counter] = array[index];
+            array[index] = temp;
+        }
+        return array;
+    }
 }
 
 module.exports = Common;
